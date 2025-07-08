@@ -6,34 +6,34 @@
 }
 
 /*
-  This rule now targets a <span> element that is a direct child of a <strong> tag,
-  which is itself a descendant of an element with a class starting with 'messageContent_'.
-  The 'messageContent_c19' is a dynamically generated class, so using a wildcard
-  selector like '[class^="messageContent_"]' is more robust, but '.markup' is often
-  a more stable general class for message content.
+  This rule targets any <span> element that is a direct child of a <strong> tag,
+  which is itself a descendant of a <div> element whose class attribute starts
+  with "message-content_".
 
-  Let's try targeting the span directly within the strong tag first,
-  as that's the most direct path to the text.
+  - `div[class^="message-content_"]`: Selects a <div> element whose class
+    attribute starts with "message-content_". This is crucial for targeting
+    Discord's message containers reliably, as the full class name changes.
+  - `strong`: Targets the <strong> element inside the above div.
+  - `span`: Targets the <span> element directly inside the <strong> tag.
+
+  The '!important' flag is used to ensure this style overrides any conflicting
+  styles from Discord or other themes.
 */
-.markup strong span,
-[class^="messageContent_"] strong span {
+div[class^="message-content_"] strong span {
   color: var(--yellow-bold-color) !important;
 }
 
 /*
-  Explanation:
-  - `.markup strong span`: This targets any `<span>` element that is inside a `<strong>`
-    element, which is itself inside an element with the class `markup`. This is a
-    good general approach for message content.
-  - `[class^="messageContent_"] strong span`: This is a more specific (and robust)
-    way to target elements within Discord messages.
-    - `[class^="messageContent_"]`: This is an attribute selector that looks for
-      any element whose `class` attribute *starts with* "messageContent_". This
-      is safer than using the full `messageContent_c19` because the numbers/letters
-      after the underscore often change with Discord updates.
-    - `strong span`: This then targets the `<span>` element inside the `<strong>`
-      element, which is inside the `messageContent_` element.
+  Additional considerations (if the above still doesn't cover everything):
 
-  The `!important` flag is still essential to ensure your custom style overrides
-  Discord's default styles.
+  Sometimes, Discord might use a different structure for bold text in other
+  parts of the UI (e.g., channel names, user profiles, pop-ups). If you find
+  bold text elsewhere that isn't yellow, you'll need to inspect it separately
+  and add more specific rules.
+
+  For example, if you find bold text in a different context (like a modal)
+  that uses a different parent class:
+  .someOtherDiscordContainer_xyz strong span {
+    color: var(--yellow-bold-color) !important;
+  }
 */
