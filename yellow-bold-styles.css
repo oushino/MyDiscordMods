@@ -5,14 +5,30 @@
   --yellow-bold-color: #ffff00;
 }
 
-/* Target bold text elements in messages */
-/* This covers most standard bold text in Discord, including user messages */
+/*
+  This rule targets all <strong> (bold) tags that are descendants of an element
+  with the class 'markup'. The 'markup' class is commonly used for the actual
+  text content of messages in Discord.
+
+  The '!important' flag is crucial here. It ensures that your custom style
+  overrides any other conflicting styles Discord might have, even if they are
+  more specific or also use '!important'.
+*/
 .markup strong {
   color: var(--yellow-bold-color) !important;
 }
 
 /*
-  If the above rule doesn't catch all bold text, you might need to inspect
-  the element in Discord (Ctrl+Shift+I) and find the specific class or element
-  responsible for the bolding in that context.
+  Troubleshooting Tip:
+  If you find that some bold text is still not yellow, it's possible that:
+  1. It's not inside a '.markup' element.
+  2. It's not an actual <strong> tag, but perhaps a <span> or <div> with
+     'font-weight: bold;' applied via a different class.
+  In such cases, you'd need to go back to the Developer Tools, inspect that
+  specific bold text, and add a new, more precise CSS rule targeting it.
+  For example, if you find a class like '.my-custom-bold-text-class', you'd add:
+
+  .my-custom-bold-text-class {
+    color: var(--yellow-bold-color) !important;
+  }
 */
