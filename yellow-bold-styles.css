@@ -1,0 +1,18 @@
+/* yellow-bold-styles.css */
+
+/* Define a custom CSS variable for the yellow color */
+:root {
+  --yellow-bold-color: #ffff00;
+}
+
+/* Target bold text elements in messages */
+/* This covers most standard bold text in Discord, including user messages */
+.markup strong {
+  color: var(--yellow-bold-color) !important;
+}
+
+/*
+  If the above rule doesn't catch all bold text, you might need to inspect
+  the element in Discord (Ctrl+Shift+I) and find the specific class or element
+  responsible for the bolding in that context.
+*/
